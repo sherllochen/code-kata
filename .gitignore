@@ -1,0 +1,18 @@
+# macOS useless files
+.DS_Store
+
+# IDE config
+.idea/
+
+# always keep .gitkeep and .keep files
+!.gitkeep
+!.keep
+
+# logs
+logs/
+
+# temporoary files
+tmp/
+
+# test coverage report
+coverage
