@@ -19,7 +19,15 @@ After running tests, a coverage report will be generated in `coverage/index.html
 rspec
 ```
 
-### 3. Change permission(in container)
+### 4. Change permission(in container)
 ```shell
 chmod +x bin/entry
+```
+
+### 5. Run cli application(in container). The environment variables are all optional.
+- MOCK: default as false, when given, there will be no real request.
+- AMOUNT: default as 20, the amount of urls.
+- THREAD: default as 2, the amount of request threads running in parallel.
+```shell
+MOCK=1 AMOUNT=100 THREAD=2 bin/entry
 ```

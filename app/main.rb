@@ -2,15 +2,15 @@
 require 'net/http'
 require 'uri'
 require 'json'
+require_relative './incremental_id_url_generator'
 
 module CodeKata
   # Entry for the application
   class Main
     class << self
       AMOUNT_TO_GENERATE = 5
-      THREAD_AMOUNT = 2
-      TOTAL_AMOUNT = 20
-      URL_PREFIX = 'https://jsonplaceholder.typicode.com/todos/'
+      THREAD_AMOUNT = (ENV['THREAD'] || 2).to_i
+      TOTAL_AMOUNT = (ENV['AMOUNT'] || 20).to_i
 
       def run
         begin
@@ -19,12 +19,12 @@ module CodeKata
           last_id = 0
           while requested_amount < TOTAL_AMOUNT
             if url_queue.empty?
-              generated_result = generate_urls(remaining_urls_to_request(requested_amount), last_id)
+              generated_result = IncrementalIdUrlGenerator.new(remaining_urls_to_request(requested_amount), last_id).generate
               url_queue.concat(generated_result[:urls])
               last_id = generated_result[:last_id]
             end
 
-            to_request_urls = pop_urls(url_queue, THREAD_AMOUNT)
+            to_request_urls = url_queue.first(THREAD_AMOUNT)
             execute_request(to_request_urls)
             # Remove urls from the sink
             url_queue.slice!(0, to_request_urls.length)
@@ -39,29 +39,9 @@ module CodeKata
 
       private
 
-      # @param [integer] amount the amount of TODOs to request
-      # @param [integer] previous_id the last id of previous generated urls
-      # @return [hash]
-      def generate_urls(amount, previous_id)
-        url_array = []
-        amount.times do
-          previous_id += 2
-          url_array << "#{URL_PREFIX}#{previous_id}"
-        end
-
-        { urls: url_array, last_id: previous_id }
-      end
-
       def remaining_urls_to_request(requested_amount)
         remaining = TOTAL_AMOUNT - requested_amount
         remaining < AMOUNT_TO_GENERATE ? remaining : AMOUNT_TO_GENERATE
-      end
-
-      # @param [array<string>] urls
-      # @param [integer] amount
-      # @return [array<string>] a url array
-      def pop_urls(urls, amount)
-        urls.first(amount)
       end
 
       # @param [array<string>] urls URL array
