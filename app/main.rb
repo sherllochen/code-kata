@@ -2,11 +2,14 @@
 require 'net/http'
 require 'uri'
 require 'json'
+require_relative '../lib/simple_logger'
 require_relative './incremental_id_url_generator'
 
 module CodeKata
   # Entry for the application
   class Main
+    include SimpleLogger
+
     class << self
       AMOUNT_TO_GENERATE = 5
       THREAD_AMOUNT = (ENV['THREAD'] || 2).to_i
@@ -31,9 +34,9 @@ module CodeKata
             requested_amount += to_request_urls.length
           end
         rescue Interrupt => e
-          puts 'SEE YOU~'
+          logger.info('SEE YOU~')
         rescue StandardError => e
-          puts "ERROR WHEN RUNNING APP. [message] #{e.message}, [backtrace] #{e.backtrace.join(',')}"
+          logger.error("ERROR WHEN RUNNING APP. [message] #{e.message}, [backtrace] #{e.backtrace.join(',')}")
         end
       end
 

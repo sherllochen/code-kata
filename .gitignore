@@ -9,7 +9,7 @@
 !.keep
 
 # logs
-logs/
+logs/*.log
 
 # temporoary files
 tmp/

@@ -1,6 +1,7 @@
 require_relative '../../app/main'  # make sure to replace '...' with the actual file path
 
 RSpec.describe CodeKata::Main, '.run' do
+  let(:subject) {described_class.run}
   let(:urls) { %w[https://jsonplaceholder.typicode.com/todos/2
                   https://jsonplaceholder.typicode.com/todos/4
                   https://jsonplaceholder.typicode.com/todos/6
@@ -23,8 +24,30 @@ RSpec.describe CodeKata::Main, '.run' do
       expected_output = urls.map { |url| "TITLE: quis ut nam facilis et officia qui, COMPLETED: false" }
 
       expect do
-        CodeKata::Main.run
+        subject
       end.to output(a_string_including(*expected_output)).to_stdout
+    end
+  end
+
+  describe 'error handling' do
+    context 'when the application is interrupted' do
+      it 'logs a goodbye message' do
+        allow(CodeKata::Main).to receive(:execute_request).and_raise(Interrupt)
+
+        expect(described_class.logger).to receive(:info).with('SEE YOU~')
+
+        subject
+      end
+    end
+
+    context 'when an error happens' do
+      it 'logs error message' do
+        allow(CodeKata::Main).to receive(:execute_request).and_raise(StandardError.new('dummy error'))
+
+        expect(described_class.logger).to receive(:error).with(/ERROR WHEN RUNNING APP/)
+
+        subject
+      end
     end
   end
 end
