@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'logger'
+gem 'rest-client'
 
 group :development, :test do
   gem 'benchmark-memory'
