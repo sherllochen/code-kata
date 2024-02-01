@@ -3,9 +3,10 @@ require_relative '../../../app/formaters/simple_formater'
 
 describe CodeKata::Formaters::SimpleFormater do
   describe '.format' do
+    let(:title) { 'foo bar' }
+    let(:completed) { [true, false].sample }
+
     it "extract attributes and return as expected" do
-      title = FFaker::Lorem.word
-      completed = [true, false].sample
       json = { 'title' => title, 'completed' => completed }
 
       result = CodeKata::Formaters::SimpleFormater.format(json)
