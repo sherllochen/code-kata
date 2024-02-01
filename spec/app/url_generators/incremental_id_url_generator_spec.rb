@@ -1,7 +1,7 @@
-require_relative '../../app/incremental_id_url_generator'
+require_relative '../../../app/url_generators/incremental_id_url_generator'
 
-describe IncrementalIdUrlGenerator do
-  let(:subject) { IncrementalIdUrlGenerator.new(5, 0) }
+describe CodeKata::IncrementalIdUrlGenerator do
+  let(:subject) { described_class.new(5, 0) }
 
   describe '.initialize' do
     it 'correctly initializes with given amount and last id' do
@@ -12,7 +12,6 @@ describe IncrementalIdUrlGenerator do
 
   describe '#generate' do
     it 'generates correct urls and updates last id' do
-      # Generate URLs
       result = subject.generate
 
       expected_urls = %w[https://jsonplaceholder.typicode.com/todos/2
