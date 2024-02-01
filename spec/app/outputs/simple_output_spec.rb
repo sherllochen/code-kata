@@ -1,5 +1,3 @@
-require 'ffaker'
-require 'pry'
 require_relative '../../../app/outputs/simple_output'
 
 describe CodeKata::Outputs::SimpleOutput do

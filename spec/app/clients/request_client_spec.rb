@@ -2,7 +2,6 @@ require_relative '../../../lib/simple_logger'
 require_relative '../../../app/clients/request_client'
 require_relative '../../../app/formaters/simple_formater'
 require_relative '../../../app/outputs/simple_output'
-require 'pry'
 
 describe CodeKata::Clients::RequestClient do
   let(:extended_class) do
