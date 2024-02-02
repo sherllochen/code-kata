@@ -28,6 +28,7 @@ module CodeKata
 
         def perform(method:, url:, params: {}, payload: {})
           validate_declaration!
+          validate_params!(method, url)
 
           self.send(:new, method: method, url: url, params: params, payload: payload).send(:perform)
         end
@@ -62,6 +63,10 @@ module CodeKata
         # Validate all required class are declared.
         def validate_declaration!
           raise NotDeclaredError unless @parser && @output && @formater
+        end
+
+        def validate_params!(method, url)
+          raise ArgumentError, 'method and url can not be nil' if !method || !url
         end
       end
 
@@ -123,7 +128,7 @@ module CodeKata
         self.class.logger.info("Error while requesting #{@url}: #{e.message}. Retry number #{@retried_time}.")
       end
 
-      def log_re_raise_error(exception, status=nil)
+      def log_re_raise_error(exception, status = nil)
         error_message = "Requesting #{@url}. Error:#{status.to_s} #{exception.message}"
         self.class.logger.error(error_message)
 

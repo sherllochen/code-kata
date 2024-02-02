@@ -1,6 +1,6 @@
 require_relative '../../../app/url_generators/incremental_id_url_generator'
 
-describe CodeKata::IncrementalIdUrlGenerator do
+describe CodeKata::UrlGenerators::IncrementalIdUrlGenerator do
   let(:subject) { described_class.new(5, 0) }
 
   describe '.initialize' do

@@ -1,6 +1,6 @@
-require_relative '../../../app/url_generators/base_generator'
+require_relative '../../../app/url_generators/base_url_generator'
 
-describe CodeKata::BaseGenerator do
+describe CodeKata::UrlGenerators::BaseUrlGenerator do
   describe '#generate' do
     let(:subject) { described_class.new }
 
