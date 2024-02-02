@@ -7,11 +7,11 @@ group :development, :test do
   gem 'benchmark-memory'
   gem 'ffaker'
   gem 'pry-byebug'
-  gem 'rspec'
   gem 'rubocop', require: false
 end
 
 group :test do
-  gem "webmock"
+  gem 'rspec'
   gem 'simplecov', require: false
+  gem "webmock"
 end

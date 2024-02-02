@@ -7,6 +7,8 @@ module CodeKata
   class Config
     include Singleton
 
+    attr_accessor :default_total
+    attr_accessor :default_threads
     attr_accessor :log_level
 
     CONFIG_FILE = './config.yml'
