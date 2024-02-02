@@ -1,4 +1,4 @@
-require_relative '../../lib/cli_hander'
+require_relative '../../lib/cli_handler'
 
 describe CodeKata::CLIHandler do
   describe '.parse' do

@@ -12,10 +12,8 @@ module CodeKata
       threads  The number of request threads to be run in parallel (default: #{DEFAULT_THREADS})
     EOF
 
-    @@cli_argv = nil
-
     def self.parse(cli_argv)
-      @@cli_argv = cli_argv
+      @cli_argv = cli_argv
 
       handle_help
 
@@ -25,7 +23,7 @@ module CodeKata
     private
 
     def self.handle_help
-      return unless (HELP_COMMANDS & @@cli_argv).any?
+      return unless (HELP_COMMANDS & @cli_argv).any?
 
       puts USAGE_INSTRUCTION
 
@@ -34,15 +32,15 @@ module CodeKata
 
     def self.parse_arguments
       begin
-        argv1, argv2 = @@cli_argv
+        argv1, argv2 = @cli_argv
         total = argv1 ? Integer(argv1) : DEFAULT_TOTAL
-        threads = argv2 ? Integer(argv2) : DEFAULT_THREADS
+        thread_count = argv2 ? Integer(argv2) : DEFAULT_THREADS
       rescue ArgumentError
         puts 'Both arguments should be integer'
         exit(1)
       end
 
-      [total, threads]
+      [total, thread_count]
     end
   end
 end
