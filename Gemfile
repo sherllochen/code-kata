@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'logger'
 gem 'rest-client'
+gem 'concurrent-ruby', require: 'concurrent'
 
 group :development, :test do
   gem 'benchmark-memory'
